@@ -1,12 +1,10 @@
-import { RECIPES } from '@wcic/content';
-import { recommend } from '@wcic/matching';
 import { Link, router } from 'expo-router';
-import { useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/button';
 import { ThemedText } from '@/components/themed-text';
 import { Colors, Radius, Spacing } from '@/constants/theme';
+import { useRecommendations } from '@/hooks/use-recommendations';
 import { displayName } from '@/lib/labels';
 import { usePantry } from '@/store/pantry';
 
@@ -15,8 +13,7 @@ const RANKS = ['Best match', 'Runner-up', 'Also good'];
 export default function ResultsScreen() {
   const items = usePantry((s) => s.items);
   const add = usePantry((s) => s.add);
-  // TODO(week 2): call the recommend function, keeping this local match as the offline fallback.
-  const { matches, suggestion } = useMemo(() => recommend(items, RECIPES), [items]);
+  const { matches, suggestion } = useRecommendations(items);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
