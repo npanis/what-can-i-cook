@@ -1,0 +1,22 @@
+{
+  "name": "@wcic/content",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Starter recipes and cooking terms. Bundled in the app for offline use and seeded into the database.",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "seed:sql": "node --experimental-strip-types scripts/to-seed-sql.ts > ../../supabase/seed.sql",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@wcic/matching": "*"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.0",
+    "ts-jest": "^29.4.0",
+    "typescript": "~6.0.3"
+  }
+}

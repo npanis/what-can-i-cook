@@ -1,0 +1,108 @@
+import type { Recipe } from '@wcic/matching';
+
+/** Every recipe is written for 1 person; the app scales amounts with "Cooking for". */
+export const RECIPES: Recipe[] = [
+  {
+    slug: 'soft-boiled-eggs-with-toast-soldiers',
+    title: 'Soft-boiled eggs with toast soldiers',
+    minutes: 10,
+    difficulty: 'easy',
+    ingredients: [
+      { ingredient: 'egg', amount: 2 },
+      { ingredient: 'bread', amount: 1, unit: 'slice' },
+      { ingredient: 'butter', amount: 1, unit: 'tsp' },
+      { ingredient: 'salt', unit: 'pinch' },
+      { ingredient: 'black pepper', unit: 'pinch' },
+    ],
+    steps: [
+      'Bring a small pot of water to a [[rolling-boil|rolling boil]].',
+      'Lower the eggs in with a spoon and [[soft-boil]] them for 6 minutes.',
+      'While the eggs cook, toast the bread, butter it, and cut it into finger-width strips ("soldiers") for dipping.',
+      'Move the eggs to cold water for 30 seconds so they stop cooking. Set each in a cup and tap off the top.',
+      'Season with a pinch of salt and pepper, then dip the soldiers into the yolk.',
+    ],
+  },
+  {
+    slug: 'cheesy-scrambled-eggs-on-toast',
+    title: 'Cheesy scrambled eggs on toast',
+    minutes: 8,
+    difficulty: 'easy',
+    ingredients: [
+      { ingredient: 'egg', amount: 2 },
+      { ingredient: 'cheddar', amount: 20, unit: 'g' },
+      { ingredient: 'butter', amount: 1, unit: 'tsp' },
+      { ingredient: 'bread', amount: 1, unit: 'slice' },
+      { ingredient: 'salt', unit: 'pinch' },
+    ],
+    steps: [
+      'Crack the eggs into a bowl with a pinch of salt and [[whisk]] them.',
+      'Toast the bread while you cook the eggs.',
+      'Melt the butter in a small pan over low heat. Pour in the eggs and stir slowly with a spatula.',
+      'When the eggs are almost set but still a little wet, take the pan off the heat and stir in the grated cheddar.',
+      'Spoon the eggs onto the toast and eat straight away.',
+    ],
+  },
+  {
+    slug: 'egg-in-a-hole',
+    title: 'Egg in a hole',
+    minutes: 12,
+    difficulty: 'easy',
+    ingredients: [
+      { ingredient: 'egg', amount: 1 },
+      { ingredient: 'bread', amount: 1, unit: 'slice' },
+      { ingredient: 'butter', amount: 2, unit: 'tsp' },
+      { ingredient: 'chives', amount: 1, unit: 'tsp', optional: true },
+      { ingredient: 'salt', unit: 'pinch' },
+      { ingredient: 'black pepper', unit: 'pinch' },
+    ],
+    steps: [
+      'Cut a circle out of the middle of the bread with a cup or glass.',
+      'Melt the butter in a pan over medium heat and add the bread and the cut-out circle.',
+      'Crack the egg into the hole. Cook for 3 minutes until the bottom is [[golden]].',
+      'Flip carefully and cook 1 more minute for a runny yolk, or 2 for a firmer one.',
+      'Season with salt and pepper, and scatter chives on top if you have them.',
+    ],
+  },
+  {
+    slug: 'tomato-garlic-pasta',
+    title: 'Tomato and garlic pasta',
+    minutes: 20,
+    difficulty: 'easy',
+    ingredients: [
+      { ingredient: 'pasta', amount: 100, unit: 'g' },
+      { ingredient: 'tomato', amount: 2 },
+      { ingredient: 'garlic', amount: 1, unit: 'clove' },
+      { ingredient: 'oil', amount: 1, unit: 'tbsp' },
+      { ingredient: 'salt', unit: 'pinch' },
+      { ingredient: 'cheddar', amount: 10, unit: 'g', optional: true },
+    ],
+    steps: [
+      'Cook the pasta in a pot of salted water at a [[rolling-boil|rolling boil]], following the time on the packet.',
+      'Meanwhile, chop the tomatoes and slice the garlic thinly.',
+      'Warm the oil in a pan over medium heat and cook the garlic for 1 minute, until it smells good but is not brown.',
+      'Add the tomatoes and a pinch of salt, then [[simmer]] for 8 minutes until saucy.',
+      'Drain the pasta, toss it in the sauce, and grate cheese on top if you like.',
+    ],
+  },
+  {
+    slug: 'onion-fried-rice',
+    title: 'Onion and egg fried rice',
+    minutes: 15,
+    difficulty: 'easy',
+    ingredients: [
+      { ingredient: 'rice', amount: 1, unit: 'cup' },
+      { ingredient: 'egg', amount: 1 },
+      { ingredient: 'onion', amount: 0.5 },
+      { ingredient: 'oil', amount: 1, unit: 'tbsp' },
+      { ingredient: 'salt', unit: 'pinch' },
+      { ingredient: 'soy sauce', amount: 1, unit: 'tbsp', optional: true },
+    ],
+    steps: [
+      'Use cooked rice, ideally from the day before. Chop the onion finely.',
+      'Heat the oil in a pan over high heat and fry the onion for 3 minutes until soft.',
+      'Push the onion to one side, crack in the egg, and stir it until just set.',
+      'Add the rice, break up any clumps, and fry for 4 minutes until hot and a little [[golden]].',
+      'Season with salt, or soy sauce if you have it.',
+    ],
+  },
+];
