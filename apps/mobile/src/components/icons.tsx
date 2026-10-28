@@ -36,3 +36,27 @@ export function ArrowLeftIcon({ size = 20, color }: IconProps) {
     </Svg>
   );
 }
+
+export function CheckIcon({ size = 18, color }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 18 18" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <Path d="M3.5 9.5l3.5 3.5 7.5-8" />
+    </Svg>
+  );
+}
+
+export function MinusIcon({ size = 16, color }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round">
+      <Path d="M3 8h10" />
+    </Svg>
+  );
+}
+
+export function PlusLargeIcon({ size = 16, color }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round">
+      <Path d="M3 8h10M8 3v10" />
+    </Svg>
+  );
+}
