@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.surface,
   },
   dim: { opacity: 0.4 },
   flex: { flex: 1 },

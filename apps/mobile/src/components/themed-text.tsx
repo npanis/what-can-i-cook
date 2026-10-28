@@ -1,63 +1,31 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
 
-import { Colors, ThemeColor } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
+import { Colors, Fonts, ThemeColor } from '@/constants/theme';
 
 export type ThemedTextProps = TextProps & {
-  type?: 'default' | 'title' | 'small' | 'smallBold' | 'subtitle' | 'link';
+  type?: 'default' | 'display' | 'title' | 'subtitle' | 'eyebrow' | 'label' | 'small' | 'smallBold' | 'link';
   themeColor?: ThemeColor;
 };
 
 export function ThemedText({ style, type = 'default', themeColor, ...rest }: ThemedTextProps) {
-  const theme = useTheme();
-
-  return (
-    <Text
-      style={[
-        { color: theme[themeColor ?? 'text'] },
-        type === 'default' && styles.default,
-        type === 'title' && styles.title,
-        type === 'small' && styles.small,
-        type === 'smallBold' && styles.smallBold,
-        type === 'subtitle' && styles.subtitle,
-        type === 'link' && styles.link,
-        style,
-      ]}
-      {...rest}
-    />
-  );
+  return <Text style={[{ color: Colors[themeColor ?? 'text'] }, styles[type], style]} {...rest} />;
 }
 
 const styles = StyleSheet.create({
-  small: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: 500,
-  },
-  smallBold: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: 700,
-  },
-  default: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: 500,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 700,
-    lineHeight: 36,
-  },
-  subtitle: {
-    fontSize: 20,
-    lineHeight: 26,
-    fontWeight: 700,
-  },
-  link: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: 600,
+  default: { fontFamily: Fonts.regular, fontSize: 16, lineHeight: 23 },
+  display: { fontFamily: Fonts.display, fontSize: 34, lineHeight: 36, letterSpacing: -0.3 },
+  title: { fontFamily: Fonts.display, fontSize: 30, lineHeight: 33 },
+  subtitle: { fontFamily: Fonts.display, fontSize: 20, lineHeight: 23 },
+  eyebrow: {
+    fontFamily: Fonts.bold,
+    fontSize: 12,
+    lineHeight: 16,
+    letterSpacing: 1.4,
+    textTransform: 'uppercase',
     color: Colors.accent,
   },
+  label: { fontFamily: Fonts.semibold, fontSize: 13, lineHeight: 18 },
+  small: { fontFamily: Fonts.regular, fontSize: 14, lineHeight: 20 },
+  smallBold: { fontFamily: Fonts.bold, fontSize: 15, lineHeight: 20 },
+  link: { fontFamily: Fonts.bold, fontSize: 15, lineHeight: 22, color: Colors.accent },
 });
