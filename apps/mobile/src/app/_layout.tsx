@@ -43,8 +43,19 @@ export default function RootLayout() {
         }}>
         <Stack.Screen name="index" options={{ headerShown: false, title: 'Pantry' }} />
         <Stack.Screen name="results" options={{ headerShown: false, title: 'Top recipes' }} />
-        <Stack.Screen name="recipe/[slug]" options={{ title: 'Recipe steps' }} />
-        <Stack.Screen name="term/[slug]" options={{ title: 'Cooking term', presentation: 'formSheet' }} />
+        <Stack.Screen name="recipe/[slug]" options={{ headerShown: false, title: 'Recipe steps' }} />
+        <Stack.Screen
+          name="term/[slug]"
+          options={{
+            headerShown: false,
+            title: 'Cooking term',
+            presentation: 'formSheet',
+            sheetGrabberVisible: true,
+            sheetCornerRadius: 28,
+            sheetAllowedDetents: [0.85, 1],
+            contentStyle: { backgroundColor: Colors.surface },
+          }}
+        />
       </Stack>
     </>
   );
