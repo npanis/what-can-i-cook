@@ -1,4 +1,4 @@
-import { RECIPES, TERMS } from '@wcic/content';
+import { TERMS } from '@wcic/content';
 import { formatAmount, isStaple, parseStep, toPantrySet, type RecipeIngredient } from '@wcic/matching';
 import { Link, Stack, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
@@ -8,6 +8,7 @@ import { Button } from '@/components/button';
 import { ThemedText } from '@/components/themed-text';
 import { Colors, Radius, Spacing } from '@/constants/theme';
 import { displayName, ingredientLabel, peopleLabel } from '@/lib/labels';
+import { findRecipe } from '@/lib/recommend';
 import { useHistory } from '@/store/history';
 import { usePantry } from '@/store/pantry';
 
@@ -16,7 +17,7 @@ const MAX_PEOPLE = 6;
 
 export default function RecipeScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
-  const recipe = RECIPES.find((r) => r.slug === slug);
+  const recipe = findRecipe(slug);
   const items = usePantry((s) => s.items);
   const pantry = useMemo(() => toPantrySet(items), [items]);
   const [people, setPeople] = useState(1);

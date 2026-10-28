@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "@wcic/matching": "../../packages/matching/src/index.ts",
+    "@supabase/supabase-js": "npm:@supabase/supabase-js@2",
+    "@std/assert": "jsr:@std/assert@1"
+  },
+  "unstable": ["sloppy-imports"],
+  "lint": { "rules": { "exclude": ["no-sloppy-imports"] } }
+}
