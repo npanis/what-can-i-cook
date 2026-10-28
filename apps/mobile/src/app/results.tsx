@@ -1,14 +1,24 @@
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { BackButton } from '@/components/back-button';
 import { Button } from '@/components/button';
+import { RecipeCard } from '@/components/recipe-card';
 import { ThemedText } from '@/components/themed-text';
-import { Colors, Radius, Spacing } from '@/constants/theme';
+import { Colors, Radius, ScreenPadding, Spacing } from '@/constants/theme';
 import { useRecommendations } from '@/hooks/use-recommendations';
 import { displayName } from '@/lib/labels';
+import { listSentence } from '@/lib/pantry-text';
 import { usePantry } from '@/store/pantry';
 
 const RANKS = ['Best match', 'Runner-up', 'Also good'];
+
+function heading(count: number): string {
+  if (count === 0) return 'No strong match yet';
+  if (count === 1) return 'Your best recipe';
+  return `Top ${count} recipes for you`;
+}
 
 export default function ResultsScreen() {
   const items = usePantry((s) => s.items);
@@ -16,71 +26,69 @@ export default function ResultsScreen() {
   const { matches, suggestion } = useRecommendations(items);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {matches.map((m, i) => (
-        <Link key={m.recipe.slug} href={{ pathname: '/recipe/[slug]', params: { slug: m.recipe.slug } }} asChild>
-          <Pressable style={styles.card} accessibilityRole="button">
-            <View style={styles.cardTop}>
-              <ThemedText type="smallBold" themeColor="accent">
-                {RANKS[i]}
-              </ThemedText>
-              <ThemedText type="smallBold">{Math.round(m.score * 100)}%</ThemedText>
-            </View>
-            <ThemedText type="subtitle">{m.recipe.title}</ThemedText>
-            <ThemedText type="small" themeColor="textSecondary">
-              {m.recipe.minutes} min · {displayName(m.recipe.difficulty)}
-            </ThemedText>
-            <ThemedText type="small">You have: {m.have.map(displayName).join(', ')}</ThemedText>
-            <ThemedText type="small">
-              Also need:{' '}
-              {m.need.length === 0 && m.optionalMissing.length === 0
-                ? 'Nothing else'
-                : [...m.need.map(displayName), ...m.optionalMissing.map((o) => `${displayName(o)} (optional)`)].join(', ')}
-            </ThemedText>
-          </Pressable>
-        </Link>
-      ))}
-
-      {matches.length < 2 && (
-        <View style={styles.empty}>
-          <ThemedText type="subtitle">
-            {matches.length === 0 ? 'No strong match yet' : 'Only one strong match'}
+    <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
+      <ScrollView contentContainerStyle={styles.content}>
+        <BackButton label="Back to pantry" />
+        <View style={styles.header}>
+          <ThemedText type="title" accessibilityRole="header">
+            {heading(matches.length)}
           </ThemedText>
-          {suggestion ? (
-            <>
-              <ThemedText>
-                Add {suggestion.ingredient} to unlock {suggestion.unlocks} recipe{suggestion.unlocks === 1 ? '' : 's'}.
-              </ThemedText>
-              <Button
-                label={`Add ${suggestion.ingredient}`}
-                onPress={() => add(displayName(suggestion.ingredient))}
-              />
-            </>
-          ) : (
-            <ThemedText>Try adding a few more items from your kitchen.</ThemedText>
-          )}
-          <Pressable onPress={() => router.back()} accessibilityRole="button">
-            <ThemedText type="link">Edit pantry</ThemedText>
+          <ThemedText themeColor="textSecondary" style={styles.using}>
+            Using {listSentence(items)}
+          </ThemedText>
+        </View>
+
+        <View style={styles.cards}>
+          {matches.map((m, i) => (
+            <RecipeCard key={m.recipe.slug} match={m} rank={RANKS[i] ?? 'Also good'} pantry={items} />
+          ))}
+        </View>
+
+        {matches.length < 2 && (
+          <View style={styles.suggest}>
+            {suggestion ? (
+              <>
+                <ThemedText style={styles.suggestText}>
+                  Add {suggestion.ingredient} to unlock {suggestion.unlocks} more recipe
+                  {suggestion.unlocks === 1 ? '' : 's'}.
+                </ThemedText>
+                <Button
+                  label={`Add ${suggestion.ingredient}`}
+                  variant="dark"
+                  onPress={() => add(displayName(suggestion.ingredient))}
+                />
+              </>
+            ) : (
+              <ThemedText style={styles.suggestText}>Try adding a few more items from your kitchen.</ThemedText>
+            )}
+          </View>
+        )}
+
+        <View style={styles.footer}>
+          <ThemedText type="small" themeColor="textSecondary">
+            Not quite right?
+          </ThemedText>
+          <Pressable onPress={() => router.back()} accessibilityRole="button" hitSlop={8}>
+            <ThemedText type="link">Edit my pantry</ThemedText>
           </Pressable>
         </View>
-      )}
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: Spacing.four, gap: Spacing.three },
-  card: {
-    gap: Spacing.one,
-    padding: Spacing.three,
-    borderRadius: Radius.card,
-    backgroundColor: Colors.backgroundElement,
-  },
-  cardTop: { flexDirection: 'row', justifyContent: 'space-between' },
-  empty: {
-    gap: Spacing.two,
+  screen: { flex: 1, backgroundColor: Colors.background },
+  content: { flexGrow: 1, paddingHorizontal: ScreenPadding, paddingTop: Spacing.two, paddingBottom: Spacing.four, gap: 18 },
+  header: { gap: 6 },
+  using: { fontSize: 15 },
+  cards: { gap: 12 },
+  suggest: {
+    gap: 12,
     padding: Spacing.three,
     borderRadius: Radius.card,
     backgroundColor: Colors.warnSoft,
   },
+  suggestText: { color: Colors.warnText },
+  footer: { marginTop: 'auto', alignItems: 'center', gap: Spacing.one, paddingTop: Spacing.four },
 });
